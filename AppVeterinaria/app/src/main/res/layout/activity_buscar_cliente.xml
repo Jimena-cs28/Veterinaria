@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".BuscarCliente">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="89dp"
+            app:srcCompat="@drawable/login" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="REALICE SU BUSQUEDA AQUI"
+            android:textAlignment="center"
+            android:textColor="@color/celesteoscuro"
+            android:textSize="16dp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/etdni"
+            android:hint="DNI"
+            android:layout_weight="2"
+            android:inputType="number"
+            android:maxLength="8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btBuscar"
+            android:text="Buscar"
+            android:backgroundTint="@color/azul"
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DATOS DEL CLIENTE"
+                android:textColor="@color/celesteoscuro"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:textAlignment="center"/>
+
+            <EditText
+                android:id="@+id/etapellidosB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Apellidos"/>
+            <EditText
+                android:id="@+id/etnombreB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombres"/>
+            <EditText
+                android:id="@+id/etdniB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="DNI"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DATOS DE LA MASCOTA"
+                android:textColor="@color/celesteoscuro"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:textAlignment="center"/>
+            <EditText
+                android:id="@+id/etanimalB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Animal"/>
+            <EditText
+                android:id="@+id/etrazaB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Raza"/>
+            <EditText
+                android:id="@+id/etnombreanimalB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre"/>
+            <EditText
+                android:id="@+id/etcolorB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Color"/>
+            <EditText
+                android:id="@+id/etgeneroB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Genero"/>
+            <EditText
+                android:id="@+id/etpesoB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Peso"/>
+
+            <ImageView
+                android:id="@+id/ivfotoanimalB"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="15dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
