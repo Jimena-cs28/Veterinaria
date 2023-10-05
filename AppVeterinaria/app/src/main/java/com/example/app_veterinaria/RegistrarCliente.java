@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +25,7 @@ import java.util.Map;
 
 public class RegistrarCliente extends AppCompatActivity {
 
-    Button btregistrarcliene;
+    Button btregistrarcliene, btabrirmain;
     EditText etapellidos, etnombres, etdni, etclave;
 
     final String URL = "http://192.168.0.109/veterenaria/controllers/veterinaria.php";
@@ -40,6 +41,17 @@ public class RegistrarCliente extends AppCompatActivity {
                 mostrarDialogoRegistro();
             }
         });
+        btabrirmain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openActivity(Main.class);
+            }
+        });
+    }
+
+    private void openActivity(Class nameActivity){
+        Intent intent = new Intent(getApplicationContext(), nameActivity);
+        startActivity(intent);
     }
     private void registrarCliente(){
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
@@ -81,6 +93,7 @@ public class RegistrarCliente extends AppCompatActivity {
         etnombres = findViewById(R.id.etnombres);
         etclave = findViewById(R.id.etclave);
         etdni = findViewById(R.id.etdni);
+        btabrirmain = findViewById(R.id.btabrirmain);
     }
 
     private void mostrarDialogoRegistro(){

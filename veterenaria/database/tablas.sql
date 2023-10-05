@@ -16,8 +16,8 @@ CREATE TABLE clientes
 (
 	idcliente 	INT AUTO_INCREMENT PRIMARY KEY,
 	apellidos 	VARCHAR(50) 	NOT NULL,
-	nombres 	VARCHAR(50)			NOT NULL,
-	dni 		CHAR(8) 				NOT NULL,
+	nombres 	VARCHAR(50)	NOT NULL,
+	dni 		CHAR(8) 	NOT NULL,
 	claveacceso	VARCHAR(200)	NOT NULL
 )ENGINE=INNODB;
 
@@ -147,6 +147,35 @@ END $$
 CALL spu_buscar_mascota('78638012');
 SELECT * FROM clientes
 
+DELIMITER $$
+CREATE PROCEDURE spu_obtener_data
+( 
+	IN _idcliente INT
+)
+BEGIN
+	SELECT * FROM clientes
+	WHERE idcliente = _idcliente;
+END $$
 
+CALL spu_obtener_data(4);
 
+DELIMITER $$
+CREATE PROCEDURE spu_update_cliente
+(
+	IN _idcliente  INT,
+	IN _apellidos VARCHAR(40),
+	IN _nombres VARCHAR(40),
+	IN _dni CHAR(8),
+	IN _clave VARCHAR(200)
+)
+BEGIN 
+	UPDATE clientes SET
+	apellidos = _apellidos,
+	nombres = _nombres,
+	dni = _dni,
+	claveacceso = _clave
+	WHERE idcliente = _idcliente;
+END $$
+
+CALL spu_update_cliente(2,'Montoya Cardenas','Luis','78520043','Arie28');
 

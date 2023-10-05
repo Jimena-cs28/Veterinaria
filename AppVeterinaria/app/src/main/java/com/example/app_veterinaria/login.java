@@ -42,11 +42,11 @@ public class login extends AppCompatActivity {
         btlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity(Main.class);
+                iniciarsesion();
             }
         });
     }
-    private void login(){
+    private void iniciarsesion(){
         if(etnombreusuario.getText().toString().isEmpty()){
             Toast.makeText(this, "Escriba su dni y contraseña", Toast.LENGTH_SHORT).show();
         }else{
@@ -56,22 +56,16 @@ public class login extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            //try{
-                                //convierte la cadena en un json
-                                //JSONArray jsonArray = new JSONArray(response);
-                                //if (jsonArray.length()>0){
-                                    //JSONObject jsonObject = jsonArray.getJSONObject(0);
-
-                                     // etApellidosB.setText(jsonObject.getString("apellidos"));
-
-                                //}else{
-                                    //notificar("no encontramos");
-                                //}
-                                //pendiente... cargar la imagen
-                            //}catch (JSONException e){,m
-                            //    e.printStackTrace();
-                            //}
-                            openActivity(Main.class);
+                            // Validar las credenciales (esto es un ejemplo simple, en una aplicación real deberías verificar con una base de datos)
+                            if (etnombreusuario.equals("dni") && etcontraseña.equals("claveacceso")) {
+                                // Credenciales correctas, mostrar un mensaje de éxito
+                                Toast.makeText(login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+                                openActivity(Main.class);
+                                // Aquí podrías abrir la siguiente actividad o realizar otras acciones después del inicio de sesión
+                            }else {
+                                // Credenciales incorrectas, mostrar un mensaje de error
+                                Toast.makeText(login.this, "Nombre de usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     },
                     new Response.ErrorListener() {
