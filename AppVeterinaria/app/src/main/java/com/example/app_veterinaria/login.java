@@ -4,7 +4,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +16,8 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -23,11 +27,13 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.jar.JarException;
 
 public class login extends AppCompatActivity {
     Button btaccederRegistroC,btlogin;
     EditText etnombreusuario, etcontraseña;
-    final String URL = "http://192.168.0.109/veterenaria/controllers/usuario.php";
+    int idcliente;
+    final String URL = "http://192.168.0.109/Veterinaria/veterenaria/controllers/usuario.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,43 +56,39 @@ public class login extends AppCompatActivity {
         if(etnombreusuario.getText().toString().isEmpty()){
             Toast.makeText(this, "Escriba su dni y contraseña", Toast.LENGTH_SHORT).show();
         }else{
-            StringRequest stringRequest = new StringRequest(
-                    Request.Method.POST,
-                    URL,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            // Validar las credenciales (esto es un ejemplo simple, en una aplicación real deberías verificar con una base de datos)
-                            if (etnombreusuario.equals("dni") && etcontraseña.equals("claveacceso")) {
-                                // Credenciales correctas, mostrar un mensaje de éxito
-                                Toast.makeText(login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-                                openActivity(Main.class);
-                                // Aquí podrías abrir la siguiente actividad o realizar otras acciones después del inicio de sesión
-                            }else {
-                                // Credenciales incorrectas, mostrar un mensaje de error
-                                Toast.makeText(login.this, "Nombre de usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                           // notificar(error.toString());
-                        }
-                    }
-            ){
-                @Nullable
+            Uri.Builder URLNEW = Uri.parse(URL).buildUpon();
+            URLNEW.appendQueryParameter("operacion","login");
+            URLNEW.appendQueryParameter("dni", etnombreusuario.getText().toString());
+            URLNEW.appendQueryParameter("claveIngresada",etcontraseña.getText().toString());
+            String URLUPDATE = URLNEW.build().toString();
+            JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.GET, URLUPDATE, null, new Response.Listener<JSONObject>() {
                 @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> parametros = new HashMap<>();
-                    parametros.put("operacion", "login");
-                    parametros.put("dni",etnombreusuario.getText().toString());
-                    parametros.put("claveIngresada", etcontraseña.getText().toString());
-                    return parametros;
-                }
-            };
+                public void onResponse(JSONObject response) {
+                    try {
+                        if (response.getBoolean("status")) {
+                            idcliente = response.getInt("idcliente");
+                            Toast.makeText(login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), Main.class);
+                            intent.putExtra("idcliente", idcliente);
+                            startActivity(intent);
+                        }else {
+                            // por si sale
+                            Toast.makeText(login.this, response.getString("mensaje"), Toast.LENGTH_SHORT).show();
+                        }
+                    }catch (JSONException error){
+                        error.printStackTrace();
+                    }
 
-            Volley.newRequestQueue(this).add(stringRequest);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("Error volley", error.toString());
+                }
+            });
+
+
+            Volley.newRequestQueue(this).add(jsonObjectRequest);
         }
     }
     private void openActivity(Class nameActivity){
